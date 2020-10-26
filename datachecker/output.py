@@ -30,6 +30,6 @@ class TextfileOutput(Output):
         pass
 
     def write_output(self, output):
-        with open("/tmp/dg_report.txt", "w") as report:
+        with open("/output/dg-data-checker_report.txt", "w") as report:
             report.write(output)
 
