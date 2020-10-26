@@ -1,0 +1,23 @@
+name: Continous Integration
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: nethinks/datagerry_ci
+    steps:
+    - name: checkout the source code
+      uses: actions/checkout@v2
+    - name: build
+      run:  make
+    - name: publish docker image to hub.docker.com
+      run: |
+        echo "$DOCKER_TOKEN" | docker login --username $DOCKER_USER --password-stdin
+        docker push nethinks/dg-data-checker
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+
